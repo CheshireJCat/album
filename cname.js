@@ -14,6 +14,7 @@ if (fs.existsSync(fileDirectory)) {
     files.forEach(function(file,i) {
         var filePath = path.join(fileDirectory,file);
         if (re.test(file)) {
+            file = file.toLowerCase();
             var fileName = i + file.match(re)[0];
             var newFilePath = path.join(fileDirectory, fileName);
 

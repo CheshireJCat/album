@@ -7,10 +7,13 @@
 	body,
 	html{width:100%;height:100%;margin:0;padding:0;}
 	body{background:#bfafa0;font-family:Sans-serif Helvetica,微软雅黑;}
+	div,ul,li{ margin:0;}
 	.covers{width:60%;margin:0 auto;padding-top: 230px;padding-bottom: 100px;}
+	.covers.active{ margin-left: 0;width:100%;}
 	.covers a{display:block;background:#000;width:100%;height:140px;line-height:140px;font-size:50px;color:#fff;text-decoration:none;padding-left:60px;box-sizing:border-box;position:relative;overflow:hidden;}
 	.covers a:hover img{opacity:1;-webkit-transform:scale(1.1);transform:scale(1.1);}
 	.covers a:hover span{text-shadow:0 0 10px #000;}
+	/*.covers a.active{ text-align:right;padding-right: 60px;}*/
 	.covers img{position:absolute;width:100%;top:0;left:0;opacity:0.8;z-index:0;transition:-webkit-transform 1s;transition:transform 1s;}
 	.covers span{z-index:1;position:relative;text-shadow:0 0 0px #000;transition:-webkit-transform 1s;transition:transform 1s;}
 	.back{position: fixed;right:0;bottom:0;background:#ddd;display:block;width:80px;height:80px;border-radius:80px 0 0 0px;text-align:right;box-sizing: border-box;padding-top: 40px;padding-right: 10px;text-decoration: none;color:#333;}
@@ -19,18 +22,106 @@
 	@media (min-width: 375px) and (max-width: 1024px) {
 		.title{ font-size: 100px;padding-left: 10%;}
 	}
+
+	.galleryBox{position:fixed;width:60%;height:100%;overflow-y:auto;overflow-x:hidden;background:rgba(0,0,0,.6);top:0;left:20%;z-index: 1;display:none;padding-top: 50px;}
+	.galleryBox-title{position:fixed;top:0;padding:10px 30px;color:#fff;border-bottom:1px solid #fff;width:100%;}
+	.galleryBox-name{font-size: 20px;}
+	.galleryBox-close{font-size: 30px;float: right;line-height:20px;}
+	.galleryBox-close:hover{color:aquamarine;font-size: 32px;cursor: pointer;}
+	.lightgallery  {
+	    margin-bottom: 0;
+	}
+	.lightgallery li {
+	    float: left;
+	    margin-top: 20px;
+	    margin-right: 20px;
+	    width: 200px;
+	    list-style: none;
+	    cursor: pointer;
+	}
+	.lightgallery  li img {
+	    -webkit-transition: -webkit-transform 0.15s ease 0s;
+	    -moz-transition: -moz-transform 0.15s ease 0s;
+	    -o-transition: -o-transform 0.15s ease 0s;
+	    transition: transform 0.15s ease 0s;
+	    -webkit-transform: scale3d(1, 1, 1);
+	    transform: scale3d(1, 1, 1);
+	    width: 100%;
+
+	    border: 5px solid #FFF;
+	    box-sizing: border-box;
+	}
+	.lightgallery li:hover img {
+	    -webkit-transform: scale3d(1.1, 1.1, 1.1);
+	    transform: scale3d(1.1, 1.1, 1.1);
+	}
 </style>
+<link type="text/css" rel="stylesheet" href="http://ofn46ords.bkt.clouddn.com/lightgallery/css/lightgallery.css" />
 </head>
 
 <body>
 	<span class="title">Album</span>
 	<div class="covers">
-		<a href="Neko/"target="_blank"><span>Neko</span><img src="http://oxpahtgh0.bkt.clouddn.com/img/Neko.jpg"></a>
-		<a href="Avalon/"target="_blank"><span>Avalon</span><img src="http://oxpahtgh0.bkt.clouddn.com/img/Avalon.jpg"></a>
-		<a href="Game/"target="_blank"><span>Game</span><img src="http://oxpahtgh0.bkt.clouddn.com/img/Game.jpg"></a>
-		<a href="Others/"target="_blank"><span>Others</span><img src="http://oxpahtgh0.bkt.clouddn.com/img/Others.jpg"></a>
+		<a data-to="Neko" href="Neko/"target="_blank"><span>Neko</span><img src="http://oxpahtgh0.bkt.clouddn.com/img/Neko.jpg"></a>
+		<a data-to="Avalon" href="Avalon/"target="_blank"><span>Avalon</span><img src="http://oxpahtgh0.bkt.clouddn.com/img/Avalon.jpg"></a>
+		<a data-to="Game" href="Game/"target="_blank"><span>Game</span><img src="http://oxpahtgh0.bkt.clouddn.com/img/Game.jpg"></a>
+		<a data-to="Others" href="Others/"target="_blank"><span>Others</span><img src="http://oxpahtgh0.bkt.clouddn.com/img/Others.jpg"></a>
+	</div>
+	<div class="galleryBox">
+		<div class="galleryBox-title"><span class="galleryBox-name"></span><span class="galleryBox-close">×</span></div>
+		<ul id="lightgallery" class="lightgallery">
+
+		</ul>
 	</div>
 	<a href="//lmaomaoz.com/" class="back">首页</a>
+	<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+	<script type="text/javascript" src="https://cdn.bootcss.com/require.js/2.3.5/require.min.js"></script>
+
+	<script type="text/javascript">
+		var box = $('.galleryBox');
+		var covers = $('.covers');
+		// 打开相册
+		$('.covers a').click(function(event) {
+			event.preventDefault();
+			covers.addClass('active');
+			$(this).addClass('active').siblings().removeClass('active');
+			var aim = $(this).attr('data-to');
+			createGallery(aim);
+			box.slideDown();
+		});
+		var data = {
+			Neko: 11,
+			Game: 257,
+			Avalon: 0,
+			Others: 0
+		};
+		$('.galleryBox-close').click(function(){
+			box.slideUp();
+			covers.removeClass('active');
+		});
+		var container = document.getElementById('lightgallery');
+		function createGallery(albumName){
+			$('.galleryBox-name').text(albumName);
+			var pre = 'http://oxpahtgh0.bkt.clouddn.com/'+  albumName +'/';
+			var imgs = [];
+			var smallCode = '?imageslim';	
+			var thumbCode = '?imageView2/1/w/200/h/150/format/jpg/q/75|imageslim';
+			var l = data[albumName];
+			l = l > 50 ? 50 : l;
+			for (var i = 0, src; i < l; i++) {
+				src = pre + i + '.jpg';
+				imgs.push('<li data-src="'+ src + smallCode +'"><img src="' + src + thumbCode + '" /></li>');
+			}
+			container.innerHTML = imgs.join('');
+			require(['http://ofn46ords.bkt.clouddn.com/lightgallery/js/lightgallery.min.js'],function(){
+				require(['http://ofn46ords.bkt.clouddn.com/lightgallery/js/lg-thumbnail.min.js'],function(){
+					lightGallery(container,{
+						thumbnail:true
+					}); 
+				});
+			});
+		};
+	</script>
 </body>
 
 </html>
