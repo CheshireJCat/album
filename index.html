@@ -138,11 +138,12 @@
 		// 相册插件
 		function createGallery(){
 			require(['http://ofn46ords.bkt.clouddn.com/lightgallery/js/lightgallery.min.js'],function(){
-				require(['http://ofn46ords.bkt.clouddn.com/lightgallery/js/lg-thumbnail.min.js'],function(){
+				require(['http://ofn46ords.bkt.clouddn.com/lightgallery/js/lg-thumbnail.min.js','http://ofn46ords.bkt.clouddn.com/lightgallery/js/lg-zoom.min.js'],function(){
 					lightGallery(container,{
 						thumbnail:true,
-						loop: false
-					}); 
+						loop: false,
+						zoom: true
+					});
 				});
 			});
 		}
