@@ -29,7 +29,7 @@
 	.galleryBox{position:fixed;width:60%;height:100%;background:rgba(0,0,0,.6);top:0;left:20%;z-index:1;display:none;text-align:center;}
 	.galleryBox-title{padding:10px 30px;color:#fff;border-bottom:1px solid #fff;height:25px;}
 	.galleryBox-name{font-size:20px;float:left;}
-	.galleryBox-close{font-size:30px;float:right;line-height:20px;}
+	.galleryBox-close{font-size:30px;float:right;line-height:0.7;}
 	.galleryBox-close:hover{color:aquamarine;font-size:32px;cursor:pointer;}
 	.lightgallery{margin-bottom:0;position:absolute;top:50px;left:0;width:100%;bottom:30px;box-sizing:border-box;padding:0 40px;overflow-y:auto;overflow-x:hidden;}
 	.lightgallery li{float:left;margin-top:20px;margin-right:20px;width:200px;list-style:none;cursor:pointer;text-align:center;}
@@ -39,6 +39,14 @@
 	.pager a,.pager span{color:#fff;text-decoration:none;padding:0 10px;}
 	.pager a:hover{color:#7fffd4;}
 	.pager .active{text-decoration:underline;}
+	@media (min-width:375px) and (max-width:1024px){
+		.galleryBox{width:80%;}
+		.galleryBox-title{height:40px;}
+		.galleryBox-name{font-size:30px;}
+		.galleryBox-close{font-size:50px;}
+		.pager{font-size: 30px;}
+		.lg-toolbar .lg-icon{font-size: 34px!important;}
+	}
 </style>
 <link type="text/css" rel="stylesheet" href="http://ofn46ords.bkt.clouddn.com/lightgallery/css/lightgallery.css" />
 </head>
@@ -46,10 +54,10 @@
 <body>
 	<span class="title">Album</span>
 	<div class="covers">
-		<a data-to="Neko" href="Neko/"target="_blank"><span>Neko</span><img src="http://oxpahtgh0.bkt.clouddn.com/img/Neko.jpg"></a>
-		<a data-to="Avalon" href="Avalon/"target="_blank"><span>Avalon</span><img src="http://oxpahtgh0.bkt.clouddn.com/img/Avalon.jpg"></a>
-		<a data-to="Game" href="Game/"target="_blank"><span>Game</span><img src="http://oxpahtgh0.bkt.clouddn.com/img/Game.jpg"></a>
-		<a data-to="Others" href="Others/"target="_blank"><span>Others</span><img src="http://oxpahtgh0.bkt.clouddn.com/img/Others.jpg"></a>
+		<a data-to="Neko" href="javascript:void(0)" ><span>Neko</span><img src="http://oxpahtgh0.bkt.clouddn.com/img/Neko.jpg"></a>
+		<a data-to="Avalon" href="javascript:void(0)" ><span>Avalon</span><img src="http://oxpahtgh0.bkt.clouddn.com/img/Avalon.jpg"></a>
+		<a data-to="Game" href="javascript:void(0)" ><span>Game</span><img src="http://oxpahtgh0.bkt.clouddn.com/img/Game.jpg"></a>
+		<a data-to="Others" href="javascript:void(0)" ><span>Others</span><img src="http://oxpahtgh0.bkt.clouddn.com/img/Others.jpg"></a>
 	</div>
 	<div class="galleryBox">
 		<div class="galleryBox-title"><span class="galleryBox-name"></span><div class="pager"></div><span class="galleryBox-close">×</span></div>
