@@ -122,6 +122,12 @@
 		});
 		// 数据填充
 		// (function(){
+		// 	Albums = {
+		// 		Neko: [],
+		// 		Game: [],
+		// 		Avalon: [],
+		// 		Others: []
+		// 	}
 		// 	var data = {
 		// 		Neko: 11,
 		// 		Game: 251,
@@ -130,14 +136,14 @@
 		// 	};
 		// 	// 设置neko数据
 		// 	for (var i = 0; i < data['Neko']; i++) {
-		// 		Albums['Neko'].push(i + '.jpg');
+		// 		Albums['Neko'].push({src: i + '.jpg'});
 		// 	};
 		// 	// 设置game数据
 		// 	for (var i = 0; i < data['Game']; i++) {
 		// 		if(i == 247){
-		// 			Albums['Game'].push(i + '.png');
+		// 			Albums['Game'].push({src: i + '.png'});
 		// 		}else{
-		// 			Albums['Game'].push(i + '.jpg');
+		// 			Albums['Game'].push({src: i + '.jpg'});
 		// 		}
 		// 	};
 		// })();
@@ -154,7 +160,7 @@
 			var imgs = [];
 			// l = l > 50 ? 50 : l;
 			for (var i = 0, src; i < l; i++) {
-				src = prefix + albumName + '/' + data[i];
+				src = prefix + albumName + '/' + data[i].src;
 				imgs.push('<li data-src="'+ src + smallCode +'"><img src="' + src + thumbCode + '" /></li>');
 			}
 			container.innerHTML = imgs.join('');
