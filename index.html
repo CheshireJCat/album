@@ -27,9 +27,9 @@
 		.title{ font-size: 100px;padding-left: 10%;}
 	}
 
-	.galleryBox{position:fixed;width:60%;height:100%;background:rgba(0,0,0,.6);top:0;left:20%;z-index: 1;display:none;}
-	.galleryBox-title{padding:10px 30px;color:#fff;border-bottom:1px solid #fff;}
-	.galleryBox-name{font-size: 20px;}
+	.galleryBox{position:fixed;width:60%;height:100%;background:rgba(0,0,0,.6);top:0;left:20%;z-index: 1;display:none;text-align: center;}
+	.galleryBox-title{padding:10px 30px;color:#fff;border-bottom:1px solid #fff;height:25px;}
+	.galleryBox-name{font-size: 20px;float:left;}
 	.galleryBox-close{font-size: 30px;float: right;line-height:20px;}
 	.galleryBox-close:hover{color:aquamarine;font-size: 32px;cursor: pointer;}
 	.lightgallery  {
@@ -38,7 +38,7 @@
 	    top:50px;
 	    left:0;
 	    width: 100%;
-	    bottom:0;
+	    bottom:30px;
 	    box-sizing:border-box;
 	    padding:0 40px;
 	    overflow-y:auto;overflow-x:hidden;
@@ -68,6 +68,20 @@
 	    -webkit-transform: scale3d(1.1, 1.1, 1.1);
 	    transform: scale3d(1.1, 1.1, 1.1);
 	}
+	.pager{
+		display: inline-block;
+	}
+	.pager a,.pager span {
+	    color: #fff;
+	    text-decoration: none;
+	    padding: 0 10px;
+	}
+	.pager a:hover{
+		color:#7fffd4;
+	}
+	.pager .active{
+		text-decoration: underline;
+	}
 </style>
 <link type="text/css" rel="stylesheet" href="http://ofn46ords.bkt.clouddn.com/lightgallery/css/lightgallery.css" />
 </head>
@@ -81,7 +95,7 @@
 		<a data-to="Others" href="Others/"target="_blank"><span>Others</span><img src="http://oxpahtgh0.bkt.clouddn.com/img/Others.jpg"></a>
 	</div>
 	<div class="galleryBox">
-		<div class="galleryBox-title"><span class="galleryBox-name"></span><span class="galleryBox-close">×</span></div>
+		<div class="galleryBox-title"><span class="galleryBox-name"></span><div class="pager"></div><span class="galleryBox-close">×</span></div>
 		<ul id="lightgallery" class="lightgallery">
 
 		</ul>
@@ -89,7 +103,7 @@
 	<a href="//lmaomaoz.com/" class="back">首页</a>
 	<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
 	<script type="text/javascript" src="https://cdn.bootcss.com/require.js/2.3.5/require.min.js"></script>
-
+	<script type="text/javascript" src="data.js"></script>
 	<script type="text/javascript">
 		var box = $('.galleryBox');
 		var covers = $('.covers');
@@ -99,41 +113,106 @@
 			covers.addClass('active');
 			$(this).addClass('active').siblings().removeClass('active');
 			var aim = $(this).attr('data-to');
-			createGallery(aim);
+			openGallery(aim);
 			box.slideDown();
 		});
-		var data = {
-			Neko: 11,
-			Game: 257,
-			Avalon: 0,
-			Others: 0
-		};
 		$('.galleryBox-close').click(function(){
 			box.slideUp();
 			covers.removeClass('active');
 		});
+		// 数据填充
+		// (function(){
+		// 	var data = {
+		// 		Neko: 11,
+		// 		Game: 251,
+		// 		Avalon: 0,
+		// 		Others: 0
+		// 	};
+		// 	// 设置neko数据
+		// 	for (var i = 0; i < data['Neko']; i++) {
+		// 		Albums['Neko'].push(i + '.jpg');
+		// 	};
+		// 	// 设置game数据
+		// 	for (var i = 0; i < data['Game']; i++) {
+		// 		if(i == 247){
+		// 			Albums['Game'].push(i + '.png');
+		// 		}else{
+		// 			Albums['Game'].push(i + '.jpg');
+		// 		}
+		// 	};
+		// })();
+		
 		var container = document.getElementById('lightgallery');
-		function createGallery(albumName){
-			$('.galleryBox-name').text(albumName);
-			var pre = 'http://oxpahtgh0.bkt.clouddn.com/'+  albumName +'/';
-			var imgs = [];
+		function renderThumb(albumName,data){
+			// 小图处理
 			var smallCode = '?imageslim';	
+			// 缩略图处理
 			var thumbCode = '?imageView2/1/w/200/h/150/format/jpg/q/75|imageslim';
-			var l = data[albumName];
-			l = l > 50 ? 50 : l;
+			// 七牛云资源链接前缀
+			var prefix = 'http://oxpahtgh0.bkt.clouddn.com/';
+			var l = data.length;
+			var imgs = [];
+			// l = l > 50 ? 50 : l;
 			for (var i = 0, src; i < l; i++) {
-				src = pre + i + '.jpg';
+				src = prefix + albumName + '/' + data[i];
 				imgs.push('<li data-src="'+ src + smallCode +'"><img src="' + src + thumbCode + '" /></li>');
 			}
 			container.innerHTML = imgs.join('');
+			createGallery();
+		}
+		function openGallery(albumName){
+			$('.galleryBox-name').text(albumName);
+			// 当前相册总数
+			var album = Albums[albumName];
+			var l = album.length;
+			// 每页最大数量
+			var showData = 30;
+			if(l > showData){
+				pager(albumName,l,album,showData);
+				$('.pager').show();
+			}else{
+				$('.pager').hide();
+			}
+			renderThumb(albumName,album.slice(0,showData));
+		};
+		// 分页插件
+		function pager(albumName,count,album,showData){
+			// 分页插件
+			require(['http://ofn46ords.bkt.clouddn.com/jquery/jquery.pagination.min.js'], function(){
+				$('.pager').pagination({
+					// pageCount:0, // 总页数（默认值：9）
+					totalData: count,// 数据总条数（默认值：0）
+					showData: showData,// 每页展示条数（默认值：0）
+					// current: 1,// 当前第几页（默认值：1）
+					// prevCls// 上一页class样式（默认值：'prev'）
+					// nextCls// 下一页class样式（默认值：'next'）
+					// prevContent// 上一页节点内容（默认值：'<'）
+					// nextContent// 下一页节点内容（默认值：'>'）
+					// activeCls// 当前选中样式（默认值：'active'）
+					// count// 当前页前后页数（默认值：3）
+					// coping// 是否开启首页尾页（默认值：false）
+					// homePage// 首页节点内容（默认值：1）
+					// endPage// 尾页节点内容（默认值：当前最大页数）
+					callback: function(api){
+						var now = api.getCurrent();
+						var start = (now - 1) * showData;
+						var end = start + showData;
+						renderThumb(album.slice(start,end));
+					}
+				});
+			});
+		}
+		// 相册插件
+		function createGallery(){
 			require(['http://ofn46ords.bkt.clouddn.com/lightgallery/js/lightgallery.min.js'],function(){
 				require(['http://ofn46ords.bkt.clouddn.com/lightgallery/js/lg-thumbnail.min.js'],function(){
 					lightGallery(container,{
-						thumbnail:true
+						thumbnail:true,
+						loop: false
 					}); 
 				});
 			});
-		};
+		}
 	</script>
 </body>
 
