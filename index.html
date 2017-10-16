@@ -31,7 +31,7 @@
 	.galleryBox-name{font-size:20px;float:left;}
 	.galleryBox-close{font-size:30px;float:right;line-height:0.7;}
 	.galleryBox-close:hover{color:aquamarine;font-size:32px;cursor:pointer;}
-	.lightgallery{margin-bottom:0;position:absolute;top:50px;left:0;width:100%;bottom:30px;box-sizing:border-box;padding:0 40px;overflow-y:auto;overflow-x:hidden;}
+	.lightgallery{margin-bottom:0;position:absolute;top:50px;left:0;width:100%;bottom:30px;box-sizing:border-box;padding-left: 35px;overflow-y:auto;overflow-x:hidden;}
 	.lightgallery li{float:left;margin-top:20px;margin-right:20px;width:200px;list-style:none;cursor:pointer;text-align:center;}
 	.lightgallery  li img{-webkit-transition:-webkit-transform 0.15s ease 0s;-moz-transition:-moz-transform 0.15s ease 0s;-o-transition:-o-transform 0.15s ease 0s;transition:transform 0.15s ease 0s;-webkit-transform:scale3d(1,1,1);transform:scale3d(1,1,1);width:100%;border:5px solid #FFF;box-sizing:border-box;}
 	.lightgallery li:hover img{-webkit-transform:scale3d(1.1,1.1,1.1);transform:scale3d(1.1,1.1,1.1);}
@@ -97,9 +97,10 @@
 			var l = data.length;
 			var imgs = [];
 			// l = l > 50 ? 50 : l;
-			for (var i = 0, src; i < l; i++) {
-				src = prefix + albumName + '/' + data[i].src;
-				imgs.push('<li data-src="'+ src + smallCode +'"><img src="' + src + thumbCode + '" /></li>');
+			for (var i = 0, src,title; i < l; i++) {
+				src = prefix + albumName + '/' + data[i].s;
+				title = data[i].t || '';
+				imgs.push('<li data-src="'+ src + smallCode +'" title="'+ title +'"><img src="' + src + thumbCode +'" alt="'+ title +'" /></li>');
 			}
 			container.innerHTML = imgs.join('');
 			createGallery();
