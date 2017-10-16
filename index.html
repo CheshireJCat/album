@@ -4,84 +4,41 @@
 <meta charset="UTF-8">
 <title>柴郡猫の相册</title>
 <style type="text/css">
-	body,
-	html{width:100%;height:100%;margin:0;padding:0;}
+	body,html{width:100%;height:100%;margin:0;padding:0;}
 	body{background:#bfafa0;font-family:Sans-serif Helvetica,微软雅黑;}
-	div,ul,li{ margin:0;padding:0;}
+	div,ul,li{margin:0;padding:0;}
 	body{scrollbar-base-color:#666;scrollbar-track-color:#303030;}
 	::-webkit-scrollbar{width:8px;height:5px;}
 	::-webkit-scrollbar-track-piece{background:#303030;}
 	::-webkit-scrollbar-thumb{-webkit-border-radius:3px;background:#999;}
-	.covers{width:60%;margin:0 auto;padding-top: 230px;padding-bottom: 100px;}
-	.covers.active{ margin-left: 0;width:100%;}
+	.covers{width:60%;margin:0 auto;padding-top:230px;padding-bottom:100px;}
+	.covers.active{margin-left:0;width:100%;}
 	.covers a{display:block;background:#000;width:100%;height:140px;line-height:140px;font-size:50px;color:#fff;text-decoration:none;padding-left:60px;box-sizing:border-box;position:relative;overflow:hidden;}
 	.covers a:hover img{opacity:1;-webkit-transform:scale(1.1);transform:scale(1.1);}
 	.covers a:hover span{text-shadow:0 0 10px #000;}
+
 	/*.covers a.active{ text-align:right;padding-right: 60px;}*/
 	.covers img{position:absolute;width:100%;top:0;left:0;opacity:0.8;z-index:0;transition:-webkit-transform 1s;transition:transform 1s;}
 	.covers span{z-index:1;position:relative;text-shadow:0 0 0px #000;transition:-webkit-transform 1s;transition:transform 1s;}
-	.back{position: fixed;right:0;bottom:0;background:#ddd;display:block;width:80px;height:80px;border-radius:80px 0 0 0px;text-align:right;box-sizing: border-box;padding-top: 40px;padding-right: 10px;text-decoration: none;color:#333;}
-	.back:hover{ transform: scale(1.5);transform-origin: 100% 100%;}
-	.title{ position: fixed;top:0;left:0;font-size: 300px;color:#333;line-height:300px;}
-	@media (min-width: 375px) and (max-width: 1024px) {
-		.title{ font-size: 100px;padding-left: 10%;}
+	.back{position:fixed;right:0;bottom:0;background:#ddd;display:block;width:80px;height:80px;border-radius:80px 0 0 0px;text-align:right;box-sizing:border-box;padding-top:40px;padding-right:10px;text-decoration:none;color:#333;}
+	.back:hover{transform:scale(1.5);transform-origin:100% 100%;}
+	.title{position:fixed;top:0;left:0;font-size:300px;color:#333;line-height:300px;}
+	@media (min-width:375px) and (max-width:1024px){
+		.title{font-size:100px;padding-left:10%;}
 	}
-
-	.galleryBox{position:fixed;width:60%;height:100%;background:rgba(0,0,0,.6);top:0;left:20%;z-index: 1;display:none;text-align: center;}
+	.galleryBox{position:fixed;width:60%;height:100%;background:rgba(0,0,0,.6);top:0;left:20%;z-index:1;display:none;text-align:center;}
 	.galleryBox-title{padding:10px 30px;color:#fff;border-bottom:1px solid #fff;height:25px;}
-	.galleryBox-name{font-size: 20px;float:left;}
-	.galleryBox-close{font-size: 30px;float: right;line-height:20px;}
-	.galleryBox-close:hover{color:aquamarine;font-size: 32px;cursor: pointer;}
-	.lightgallery  {
-	    margin-bottom: 0;
-	    position: absolute;
-	    top:50px;
-	    left:0;
-	    width: 100%;
-	    bottom:30px;
-	    box-sizing:border-box;
-	    padding:0 40px;
-	    overflow-y:auto;overflow-x:hidden;
-	}
-	.lightgallery li {
-	    float: left;
-	    margin-top: 20px;
-	    margin-right: 20px;
-	    width: 200px;
-	    list-style: none;
-	    cursor: pointer;
-	    text-align: center;
-	}
-	.lightgallery  li img {
-	    -webkit-transition: -webkit-transform 0.15s ease 0s;
-	    -moz-transition: -moz-transform 0.15s ease 0s;
-	    -o-transition: -o-transform 0.15s ease 0s;
-	    transition: transform 0.15s ease 0s;
-	    -webkit-transform: scale3d(1, 1, 1);
-	    transform: scale3d(1, 1, 1);
-	    width: 100%;
-
-	    border: 5px solid #FFF;
-	    box-sizing: border-box;
-	}
-	.lightgallery li:hover img {
-	    -webkit-transform: scale3d(1.1, 1.1, 1.1);
-	    transform: scale3d(1.1, 1.1, 1.1);
-	}
-	.pager{
-		display: inline-block;
-	}
-	.pager a,.pager span {
-	    color: #fff;
-	    text-decoration: none;
-	    padding: 0 10px;
-	}
-	.pager a:hover{
-		color:#7fffd4;
-	}
-	.pager .active{
-		text-decoration: underline;
-	}
+	.galleryBox-name{font-size:20px;float:left;}
+	.galleryBox-close{font-size:30px;float:right;line-height:20px;}
+	.galleryBox-close:hover{color:aquamarine;font-size:32px;cursor:pointer;}
+	.lightgallery{margin-bottom:0;position:absolute;top:50px;left:0;width:100%;bottom:30px;box-sizing:border-box;padding:0 40px;overflow-y:auto;overflow-x:hidden;}
+	.lightgallery li{float:left;margin-top:20px;margin-right:20px;width:200px;list-style:none;cursor:pointer;text-align:center;}
+	.lightgallery  li img{-webkit-transition:-webkit-transform 0.15s ease 0s;-moz-transition:-moz-transform 0.15s ease 0s;-o-transition:-o-transform 0.15s ease 0s;transition:transform 0.15s ease 0s;-webkit-transform:scale3d(1,1,1);transform:scale3d(1,1,1);width:100%;border:5px solid #FFF;box-sizing:border-box;}
+	.lightgallery li:hover img{-webkit-transform:scale3d(1.1,1.1,1.1);transform:scale3d(1.1,1.1,1.1);}
+	.pager{display:inline-block;}
+	.pager a,.pager span{color:#fff;text-decoration:none;padding:0 10px;}
+	.pager a:hover{color:#7fffd4;}
+	.pager .active{text-decoration:underline;}
 </style>
 <link type="text/css" rel="stylesheet" href="http://ofn46ords.bkt.clouddn.com/lightgallery/css/lightgallery.css" />
 </head>
@@ -120,33 +77,6 @@
 			box.slideUp();
 			covers.removeClass('active');
 		});
-		// 数据填充
-		// (function(){
-		// 	Albums = {
-		// 		Neko: [],
-		// 		Game: [],
-		// 		Avalon: [],
-		// 		Others: []
-		// 	}
-		// 	var data = {
-		// 		Neko: 11,
-		// 		Game: 251,
-		// 		Avalon: 0,
-		// 		Others: 0
-		// 	};
-		// 	// 设置neko数据
-		// 	for (var i = 0; i < data['Neko']; i++) {
-		// 		Albums['Neko'].push({src: i + '.jpg'});
-		// 	};
-		// 	// 设置game数据
-		// 	for (var i = 0; i < data['Game']; i++) {
-		// 		if(i == 247){
-		// 			Albums['Game'].push({src: i + '.png'});
-		// 		}else{
-		// 			Albums['Game'].push({src: i + '.jpg'});
-		// 		}
-		// 	};
-		// })();
 		
 		var container = document.getElementById('lightgallery');
 		function renderThumb(albumName,data){
@@ -186,19 +116,8 @@
 			// 分页插件
 			require(['http://ofn46ords.bkt.clouddn.com/jquery/jquery.pagination.min.js'], function(){
 				$('.pager').pagination({
-					// pageCount:0, // 总页数（默认值：9）
 					totalData: count,// 数据总条数（默认值：0）
 					showData: showData,// 每页展示条数（默认值：0）
-					// current: 1,// 当前第几页（默认值：1）
-					// prevCls// 上一页class样式（默认值：'prev'）
-					// nextCls// 下一页class样式（默认值：'next'）
-					// prevContent// 上一页节点内容（默认值：'<'）
-					// nextContent// 下一页节点内容（默认值：'>'）
-					// activeCls// 当前选中样式（默认值：'active'）
-					// count// 当前页前后页数（默认值：3）
-					// coping// 是否开启首页尾页（默认值：false）
-					// homePage// 首页节点内容（默认值：1）
-					// endPage// 尾页节点内容（默认值：当前最大页数）
 					callback: function(api){
 						var now = api.getCurrent();
 						var start = (now - 1) * showData;
