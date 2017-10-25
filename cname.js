@@ -4,7 +4,7 @@ var path = require("path");
 var args = process.argv.splice(2);
 var fileDirectory = args[0];
 var re = /\.(jpg|png|gif|jpeg)$/i;
-
+var start = args[1] || 0;
 if (fs.existsSync(fileDirectory)) {
     var files = fs.readdirSync(fileDirectory);
     var l = files.length;
@@ -15,7 +15,7 @@ if (fs.existsSync(fileDirectory)) {
         var filePath = path.join(fileDirectory,file);
         if (re.test(file)) {
             file = file.toLowerCase();
-            var fileName = i + file.match(re)[0];
+            var fileName = (i + parseInt(start)) + file.match(re)[0];
             var newFilePath = path.join(fileDirectory, fileName);
 
             fs.rename(filePath, newFilePath, function(err) {
